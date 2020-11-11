@@ -10,11 +10,11 @@ const usageData = {
     schoolPostDistribution: {
         schools: [
             {
-                name: 'Adam Elementary School',
+                name: 'Adam Elementary',
                 postCount: 90,
             },
             {
-                name: 'Alvin Elementary School',
+                name: 'Alvin Elementary',
                 postCount: 45,
             },
             {
@@ -125,8 +125,7 @@ const usageData = {
 
 const schoolPostNames = usageData.schoolPostDistribution.schools.map(school => school.name)
 const schoolPostCounts = usageData.schoolPostDistribution.schools.map(school => school.postCount)
-console.log('schoolPostNames', schoolPostNames)
-console.log('schoolPostCounts', schoolPostCounts)
+
 var ctx = document.getElementById('myChart');
 var myChart = new Chart(ctx, {
     type: 'doughnut',
@@ -170,22 +169,37 @@ var ctx2 = document.getElementById('myChart2');
 var myChart = new Chart(ctx2, {
     type: 'bar',
     data: {
-        labels: schoolPostNames,
         datasets: [{
-            label: '# of Votes',
             data: schoolPostCounts,
             backgroundColor: 'rgb(0, 153, 0)',
-            borderWidth: 1,
-            weight: 100,
         }]
     },
     options: {
+        title: {
+            display: true,
+            text: 'BY SCHOOL'
+        },
+        legend: {
+            display: false,
+        },
         scales: {
             yAxes: [{
                 ticks: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    callback: function(value) {
+                        return value % 100 !== 0 ? null : value
+                    }
+                }
+            }],
+            xAxes: [{
+                labels: schoolPostNames,
+                ticks: {
+                    autoSkip: false,
+                    maxRotation: 90,
+                    minRotation: 90,
+                    fontSize: 10,
                 }
             }]
         },
     }
-});
+})
