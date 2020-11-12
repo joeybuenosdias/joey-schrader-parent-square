@@ -7,31 +7,35 @@
     <title>Joey Schrader Parent Square</title>
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-      <div class="container-fluid">
+      <div class="container-fluid p-md-5">
+          <h3 class="text-center font-weight-bold p-5">User Dashboard</h3>
           <div class="row">
-              <div class="col-md-4 col-lg-6">
-                  <canvas id="myChart"></canvas>
+              <div class="col-md-5 col-lg-6 pr-lg-5 mb-5">
+                    <p class="text-center font-weight-bold">POST DISTRIBUTION</p>
+                    <canvas id="myChart"></canvas>
               </div>
-              <div class="col-md-8 col-lg-6">
-                  <canvas id="myChart2"></canvas>
+              <div class="col-md-7 col-lg-6">
+                    <p class="text-center font-weight-bold">BY SCHOOL</p>
+                    <canvas id="myChart2"></canvas>
               </div>
           </div>
-          <div class="row">
-            <div class="col-sm-12 authors">
-                <h1>hello</h1>
-                <h1>world</h1>
-                <h1>joey</h1>
+          <div class="container-fluid p-5">
+          <p class="text-center font-weight-bold">TOP AUTHORS</p>
+            <div id="top-authors-section" class="row">
+                <div class="col-sm-12 d-flex justify-content-center">
+                    <div id="myChart3" class="container-fluid d-flex flex-column flex-md-row align-items-center"></div>
+                </div>
             </div>
           </div>
       </div>
 
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
     <script src="main.js"></script>
   </body>

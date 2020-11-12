@@ -2,10 +2,54 @@ console.log('hello world')
 
 const usageData = {
     overallPostDistribution: {
-        district: 6,
-        school: 341,
-        class: 1300,
-        group: 259,
+        categories: [
+            {
+                title: '6 District Posts',
+                postCount: 6,
+            },
+            {
+                title: '341 School Posts',
+                postCount: 341,
+            },
+            {
+                title: '1,300 Class Posts',
+                postCount: 1300,
+            },
+            {
+                title: '259 Group Posts',
+                postCount: 259,
+            },
+        ],
+        authors: {
+            totalCount: 207,
+            topFive: [
+                {
+                    name: 'Shandee Bayne',
+                    school: 'Jimenez Elementary School',
+                    count: 40,
+                },
+                {
+                    name: 'Lisette Murillo',
+                    school: 'Kuntz Junior High School',
+                    count: 40,
+                },
+                {
+                    name: 'Rosa Ruiz',
+                    school: 'Liberty Elementary School',
+                    count: 33,
+                },
+                {
+                    name: 'Nora Jacobs',
+                    school: 'Onitervos Elementary School',
+                    count: 29,
+                },
+                {
+                    name: 'Adriana Garcia',
+                    school: 'Onitervos Elementary School',
+                    count: 26,
+                },
+            ],
+        }
     },
     schoolPostDistribution: {
         schools: [
@@ -34,7 +78,7 @@ const usageData = {
                 postCount: 28,
             },
             {
-                name: 'El Camino Junior High',
+                name: 'El Camino High',
                 postCount: 92,
             },
             {
@@ -74,7 +118,7 @@ const usageData = {
                 postCount: 40,
             },
             {
-                name: 'Robert Bruce Elementary',
+                name: 'Robert Bruce',
                 postCount: 96,
             },
             {
@@ -91,77 +135,38 @@ const usageData = {
             },
         ]
     },
-    authors: {
-        totalCount: 207,
-        topFive: [
-            {
-                rank: 1,
-                name: 'Shandee Bayne',
-                school: 'Jimenez Elementary School'
-            },
-            {
-                rank: 2,
-                name: 'Lisette Murillo',
-                school: 'Kuntz Junior High School'
-            },
-            {
-                rank: 3,
-                name: 'Rosa Ruiz',
-                school: 'Liberty Elementary School'
-            },
-            {
-                rank: 4,
-                name: 'Nora Jacobs',
-                school: 'Onitervos Elementary School'
-            },
-            {
-                rank: 5,
-                name: 'Adriana Garcia',
-                school: 'Onitervos Elementary School'
-            },
-        ],
-    }
 }
 
+const overallTitles = usageData.overallPostDistribution.categories.map(cat => cat.title)
+const overallCounts = usageData.overallPostDistribution.categories.map(cat => cat.postCount)
 const schoolPostNames = usageData.schoolPostDistribution.schools.map(school => school.name)
 const schoolPostCounts = usageData.schoolPostDistribution.schools.map(school => school.postCount)
+const authors = usageData.overallPostDistribution.authors.topFive.map(author => author)
 
 var ctx = document.getElementById('myChart');
 var myChart = new Chart(ctx, {
     type: 'doughnut',
     data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: overallTitles,
         datasets: [{
-            label: '# of Votes',
-            data: [120, 19, 3, 5, 2, 3],
+            data: overallCounts,
             backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1,
-            weight: 100,
+                'rgb(255, 99, 132)',
+                'rgb(0, 153, 0)',
+                'rgb(54, 162, 235)',
+                'rgb(255, 206, 86)',
+            ]
         }]
     },
     options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
-            }]
-        },
+        legend: {
+            position: 'right',
+            labels: {
+                boxWidth: 10,
+                fontSize: 10,
+                padding: 2,
+            }
+        }
     }
 });
 
@@ -175,10 +180,6 @@ var myChart = new Chart(ctx2, {
         }]
     },
     options: {
-        title: {
-            display: true,
-            text: 'BY SCHOOL'
-        },
         legend: {
             display: false,
         },
@@ -203,3 +204,41 @@ var myChart = new Chart(ctx2, {
         },
     }
 })
+
+var ctx3 = document.getElementById('myChart3');
+const label = document.createElement('div')
+label.innerHTML = `<div><h3 style="margin: 0;">${usageData.overallPostDistribution.authors.totalCount}</h3> <span style="font-size: 10px;">AUTHORS</span></div>`
+label.className = 'text-center'
+ctx3.prepend(label)
+
+authors.forEach(author => {
+    const card = document.createElement('div')
+    card.className = 'card d-flex align-items-center justify-content-center'
+
+    const cardContent = document.createElement('div')
+    cardContent.style = 'width: 100px; height: 100px;'
+    cardContent.className = 'd-flex align-items-center justify-content-center'
+
+    const cardBubble = document.createElement('div')
+    cardBubble.style = `width: ${author.count * 1.6}px; height: ${author.count * 1.6}px; background-color: green; border-radius: 1000px; color: white;`
+    cardBubble.className = 'bubble d-flex align-items-center justify-content-center'
+
+    const cardName = document.createElement('p')
+    cardName.style = 'font-size: 10px; color: green;'
+    cardName.className = 'text-truncate mb-0 font-weight: bold;'
+
+    const cardSchool = document.createElement('p')
+    cardSchool.style = 'font-size: 10px; overflow: hidden; padding: 8px; height: 40px;'
+    cardSchool.className = 'text-center mb-0'
+
+    cardBubble.innerHTML = author.count
+    cardName.innerHTML = author.name
+    cardSchool.innerHTML = author.school
+
+    cardContent.appendChild(cardBubble)
+    card.appendChild(cardContent)
+    card.appendChild(cardName)
+    card.appendChild(cardSchool)
+    ctx3.appendChild(card)
+});
+console.log('ctx3', ctx3)

@@ -1,9 +1,22 @@
-.authors {
+.card {
     display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    width: 150px;
 }
 
-@media(max-width: 770px) {
+/* .bubble {
+    /* height: 80px;
+    width: 80px;
+    background-color: green;
+    border-radius: 1000px; */
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+
+/* @media(max-width: 770px) {
     .authors {
       flex-direction: column;
     }
-}
+} */
