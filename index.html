@@ -12,29 +12,30 @@
   </head>
   <body>
       <div class="container-fluid p-md-5">
-          <h3 class="text-center font-weight-bold p-5">User Dashboard</h3>
+          <h3 class="text-center font-weight-bold p-5">Usage Dashboard</h3>
           <div class="row">
               <div class="col-md-5 col-lg-6 pr-lg-5 mb-5">
                     <p class="text-center font-weight-bold">POST DISTRIBUTION</p>
-                    <canvas id="myChart"></canvas>
+                    <canvas id="overall-distro"></canvas>
               </div>
-              <div class="col-md-7 col-lg-6">
+              <div class="col-md-7 col-lg-6 p-0">
                     <p class="text-center font-weight-bold">BY SCHOOL</p>
-                    <canvas id="myChart2"></canvas>
+                    <div style="position: relative; width:100%;">
+                      <canvas id="school-distro"></canvas>
+                    </div>
               </div>
           </div>
           <div class="container-fluid p-5">
           <p class="text-center font-weight-bold">TOP AUTHORS</p>
             <div id="top-authors-section" class="row">
                 <div class="col-sm-12 d-flex justify-content-center">
-                    <div id="myChart3" class="container-fluid d-flex flex-column flex-md-row align-items-center"></div>
+                    <div id="top-authors-funnel" class="container-fluid d-flex flex-column flex-md-row align-items-center justify-content-center"></div>
                 </div>
             </div>
           </div>
       </div>
 
     <!-- Scripts -->
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
     <script src="main.js"></script>

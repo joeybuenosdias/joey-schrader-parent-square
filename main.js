@@ -1,5 +1,3 @@
-console.log('hello world')
-
 const usageData = {
     overallPostDistribution: {
         categories: [
@@ -20,38 +18,6 @@ const usageData = {
                 postCount: 259,
             },
         ],
-        authors: {
-            totalCount: 207,
-            topFive: [
-                {
-                    name: 'Shandee Bayne',
-                    school: 'Jimenez Elementary School',
-                    count: 40,
-                },
-                {
-                    name: 'Lisette Murillo',
-                    school: 'Kuntz Junior High School',
-                    count: 40,
-                },
-                {
-                    name: 'Rosa Ruiz',
-                    school: 'Liberty Elementary School',
-                    count: 33,
-                },
-                {
-                    name: 'Nora Jacobs',
-                    school: 'Onitervos Elementary School',
-                    count: 29,
-                },
-                {
-                    name: 'Adriana Garcia',
-                    school: 'Onitervos Elementary School',
-                    count: 26,
-                },
-            ],
-        }
-    },
-    schoolPostDistribution: {
         schools: [
             {
                 name: 'Adam Elementary',
@@ -133,18 +99,44 @@ const usageData = {
                 name: 'Tunnell Martin Luther',
                 postCount: 160,
             },
-        ]
+        ],
+        authors: {
+            totalCount: 207,
+            topFive: [
+                {
+                    name: 'Shandee Bayne',
+                    school: 'Jimenez Elementary School',
+                    count: 40,
+                },
+                {
+                    name: 'Lisette Murillo',
+                    school: 'Kuntz Junior High School',
+                    count: 40,
+                },
+                {
+                    name: 'Rosa Ruiz',
+                    school: 'Liberty Elementary School',
+                    count: 33,
+                },
+                {
+                    name: 'Nora Jacobs',
+                    school: 'Onitervos Elementary School',
+                    count: 29,
+                },
+                {
+                    name: 'Adriana Garcia',
+                    school: 'Onitervos Elementary School',
+                    count: 26,
+                },
+            ],
+        }
     },
 }
 
-const overallTitles = usageData.overallPostDistribution.categories.map(cat => cat.title)
-const overallCounts = usageData.overallPostDistribution.categories.map(cat => cat.postCount)
-const schoolPostNames = usageData.schoolPostDistribution.schools.map(school => school.name)
-const schoolPostCounts = usageData.schoolPostDistribution.schools.map(school => school.postCount)
-const authors = usageData.overallPostDistribution.authors.topFive.map(author => author)
-
-var ctx = document.getElementById('myChart');
-var myChart = new Chart(ctx, {
+const overallTitles = usageData.overallPostDistribution.categories.map(category => category.title)
+const overallCounts = usageData.overallPostDistribution.categories.map(category => category.postCount)
+const overallDistroCanvas = document.getElementById('overall-distro')
+const overallDistroChart = new Chart(overallDistroCanvas, {
     type: 'doughnut',
     data: {
         labels: overallTitles,
@@ -152,34 +144,53 @@ var myChart = new Chart(ctx, {
             data: overallCounts,
             backgroundColor: [
                 'rgb(255, 99, 132)',
-                'rgb(0, 153, 0)',
+                '#5cb85c',
                 'rgb(54, 162, 235)',
                 'rgb(255, 206, 86)',
             ]
         }]
     },
     options: {
+        layout: {
+            padding: {
+                left: 0,
+                right: 50,
+                top: 0,
+                bottom: 0
+            }
+        },
         legend: {
             position: 'right',
+            fullWidth: false,
             labels: {
                 boxWidth: 10,
                 fontSize: 10,
-                padding: 2,
+                padding: 15,
             }
         }
     }
-});
+})
 
-var ctx2 = document.getElementById('myChart2');
-var myChart = new Chart(ctx2, {
+const schoolPostNames = usageData.overallPostDistribution.schools.map(school => school.name)
+const schoolPostCounts = usageData.overallPostDistribution.schools.map(school => school.postCount)
+const schoolDistroCanvas = document.getElementById('school-distro')
+const schoolDistroChart = new Chart(schoolDistroCanvas, {
     type: 'bar',
     data: {
         datasets: [{
             data: schoolPostCounts,
-            backgroundColor: 'rgb(0, 153, 0)',
+            backgroundColor: '#5cb85c',
         }]
     },
     options: {
+        layout: {
+            padding: {
+                left: 0,
+                right: 0,
+                top: 0,
+                bottom: 0
+            }
+        },
         legend: {
             display: false,
         },
@@ -199,37 +210,41 @@ var myChart = new Chart(ctx2, {
                     maxRotation: 90,
                     minRotation: 90,
                     fontSize: 10,
+                    callback: function(value) {
+                        return value.length > 15 ? `${value.substring(0, 12)}...` : value
+                    }
                 }
             }]
         },
     }
 })
 
-var ctx3 = document.getElementById('myChart3');
+const authors = usageData.overallPostDistribution.authors.topFive.map(author => author)
+const topAuthorsFunnel = document.getElementById('top-authors-funnel')
 const label = document.createElement('div')
-label.innerHTML = `<div><h3 style="margin: 0;">${usageData.overallPostDistribution.authors.totalCount}</h3> <span style="font-size: 10px;">AUTHORS</span></div>`
-label.className = 'text-center'
-ctx3.prepend(label)
+label.innerHTML = `<div><h3 class="m-0 mr-md-3 text-center">${usageData.overallPostDistribution.authors.totalCount}</h3> <span style="font-size: 10px;">AUTHORS</span></div>`
+topAuthorsFunnel.prepend(label)
 
 authors.forEach(author => {
     const card = document.createElement('div')
-    card.className = 'card d-flex align-items-center justify-content-center'
+    card.style = 'width: 150px;'
+    card.className = 'd-flex align-items-center justify-content-center card border-0'
 
     const cardContent = document.createElement('div')
     cardContent.style = 'width: 100px; height: 100px;'
     cardContent.className = 'd-flex align-items-center justify-content-center'
 
     const cardBubble = document.createElement('div')
-    cardBubble.style = `width: ${author.count * 1.6}px; height: ${author.count * 1.6}px; background-color: green; border-radius: 1000px; color: white;`
-    cardBubble.className = 'bubble d-flex align-items-center justify-content-center'
+    cardBubble.style = `width: ${author.count * 1.6}px; height: ${author.count * 1.6}px;`
+    cardBubble.className = 'd-flex align-items-center justify-content-center rounded-circle text-white bg-success'
 
     const cardName = document.createElement('p')
-    cardName.style = 'font-size: 10px; color: green;'
-    cardName.className = 'text-truncate mb-0 font-weight: bold;'
+    cardName.style = 'font-size: 10px;'
+    cardName.className = 'mb-0 text-success'
 
     const cardSchool = document.createElement('p')
-    cardSchool.style = 'font-size: 10px; overflow: hidden; padding: 8px; height: 40px;'
-    cardSchool.className = 'text-center mb-0'
+    cardSchool.style = 'font-size: 10px; height: 40px;'
+    cardSchool.className = 'text-center mb-0 p-1'
 
     cardBubble.innerHTML = author.count
     cardName.innerHTML = author.name
@@ -239,6 +254,5 @@ authors.forEach(author => {
     card.appendChild(cardContent)
     card.appendChild(cardName)
     card.appendChild(cardSchool)
-    ctx3.appendChild(card)
+    topAuthorsFunnel.appendChild(card)
 });
-console.log('ctx3', ctx3)
