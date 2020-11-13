@@ -1,3 +1,4 @@
+/** mock data */
 const usageData = {
     overallPostDistribution: {
         categories: [
@@ -133,6 +134,7 @@ const usageData = {
     },
 }
 
+/** 'Overall' section code */
 const overallTitles = usageData.overallPostDistribution.categories.map(category => category.title)
 const overallCounts = usageData.overallPostDistribution.categories.map(category => category.postCount)
 const overallDistroCanvas = document.getElementById('overall-distro')
@@ -171,6 +173,7 @@ const overallDistroChart = new Chart(overallDistroCanvas, {
     }
 })
 
+/** 'By school' section code */
 const schoolPostNames = usageData.overallPostDistribution.schools.map(school => school.name)
 const schoolPostCounts = usageData.overallPostDistribution.schools.map(school => school.postCount)
 const schoolDistroCanvas = document.getElementById('school-distro')
@@ -219,11 +222,17 @@ const schoolDistroChart = new Chart(schoolDistroCanvas, {
     }
 })
 
+/** 'Top 5 authors' section code */
 const authors = usageData.overallPostDistribution.authors.topFive.map(author => author)
+const topFiveSum = usageData.overallPostDistribution.authors.topFive.reduce((prev, curr) => prev + curr.count, 0)
 const topAuthorsFunnel = document.getElementById('top-authors-funnel')
 const label = document.createElement('div')
-label.innerHTML = `<div><h3 class="m-0 mr-md-3 text-center">${usageData.overallPostDistribution.authors.totalCount}</h3> <span style="font-size: 10px;">AUTHORS</span></div>`
+label.innerHTML = `<div><h3 class="text-center m-0 mr-md-3">${usageData.overallPostDistribution.authors.totalCount}</h3> <span style="font-size: 10px;">AUTHORS</span></div>`
 topAuthorsFunnel.prepend(label)
+
+function bubbleSizer(count, sum) {
+    return (count / sum) * 300
+}
 
 authors.forEach(author => {
     const card = document.createElement('div')
@@ -235,12 +244,12 @@ authors.forEach(author => {
     cardContent.className = 'd-flex align-items-center justify-content-center'
 
     const cardBubble = document.createElement('div')
-    cardBubble.style = `width: ${author.count * 1.6}px; height: ${author.count * 1.6}px;`
+    cardBubble.style = `width: ${bubbleSizer(author.count, topFiveSum)}%; height: ${bubbleSizer(author.count, topFiveSum)}%; max-height: 100px; max-width: 100px; min-height: 25px; min-width: 25px;`
     cardBubble.className = 'd-flex align-items-center justify-content-center rounded-circle text-white bg-success'
 
     const cardName = document.createElement('p')
     cardName.style = 'font-size: 10px;'
-    cardName.className = 'mb-0 text-success'
+    cardName.className = 'text-success mb-0'
 
     const cardSchool = document.createElement('p')
     cardSchool.style = 'font-size: 10px; height: 40px;'
