@@ -264,4 +264,4 @@ authors.forEach(author => {
     card.appendChild(cardName)
     card.appendChild(cardSchool)
     topAuthorsFunnel.appendChild(card)
-});
+})
